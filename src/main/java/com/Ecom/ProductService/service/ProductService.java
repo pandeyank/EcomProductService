@@ -16,4 +16,10 @@ public interface ProductService {
     ProductResponseDto updateProduct(UUID id, ProductResponseDto productResponseDto);
 
     boolean deleteProduct(UUID id);
+
+    ProductResponseDto getProductByTitle(String title);
+
+    ProductResponseDto getProductByTitleAndDescription(String titile, String description);
+
+    List<ProductResponseDto> getProductByPriceBetween(double startPrice, double endPrice);
 }

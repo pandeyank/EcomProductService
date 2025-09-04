@@ -7,11 +7,7 @@ import com.Ecom.ProductService.dto.ProductRequestDto;
 import com.Ecom.ProductService.dto.ProductResponseDto;
 import com.Ecom.ProductService.exception.ProductNotFoundException;
 import com.Ecom.ProductService.mapper.ProductMapper;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.*;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.HttpClientErrorException;
-import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
@@ -100,5 +96,19 @@ public class FakeStoreProductService implements ProductService{
         else {
             return true;
         }
+    }
+    @Override
+    public ProductResponseDto getProductByTitle(String title) {
+        return null;
+    }
+
+    @Override
+    public ProductResponseDto getProductByTitleAndDescription(String titile, String description) {
+        return null;
+    }
+
+    @Override
+    public List<ProductResponseDto> getProductByPriceBetween(double startPrice, double endPrice) {
+        return null;
     }
 }

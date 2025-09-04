@@ -18,7 +18,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Service("productService")
-public class ProductServiceImpl implements ProductService{
+public class ProductServiceImpl implements ProductService {
     ProductRepository productRepository;
     CategoryRepository categoryRepository;
     PriceRepository priceRepository;
@@ -32,7 +32,7 @@ public class ProductServiceImpl implements ProductService{
     @Override
     public ProductResponseDto getProductById(UUID id) {
         Product product = productRepository.findById(id).orElseThrow(null);
-        ProductResponseDto productResponseDto=ProductMapper.convertProductToProductResponseDto(product);
+        ProductResponseDto productResponseDto = ProductMapper.convertProductToProductResponseDto(product);
         return productResponseDto;
     }
 
@@ -40,8 +40,8 @@ public class ProductServiceImpl implements ProductService{
     public List<ProductResponseDto> getAllProducts() {
         List<Product> products = productRepository.findAll();
         List<ProductResponseDto> productResponseDtos = new ArrayList<>();
-        for (Product product: products){
-            ProductResponseDto responseDto=ProductMapper.convertProductToProductResponseDto(product);
+        for (Product product : products) {
+            ProductResponseDto responseDto = ProductMapper.convertProductToProductResponseDto(product);
             productResponseDtos.add(responseDto);
         }
         return productResponseDtos;
@@ -69,7 +69,7 @@ public class ProductServiceImpl implements ProductService{
         product.setImage(productResponseDto.getImage());
         Price price = new Price();
         price.setAmount(productResponseDto.getPrice());
-        Category category=new Category();
+        Category category = new Category();
         category.setCatInfo(productResponseDto.getCategory());
         priceRepository.save(price);
         categoryRepository.save(category);
@@ -80,5 +80,39 @@ public class ProductServiceImpl implements ProductService{
     @Override
     public boolean deleteProduct(UUID id) {
         return false;
+    }
+
+    @Override
+    public ProductResponseDto getProductByTitle(String title) {
+        Product product = productRepository.findByTitle(title);
+        if (product == null) {
+            return null;
+        }
+        ProductResponseDto responseDto = ProductMapper.convertProductToProductResponseDto(product);
+        return responseDto;
+    }
+
+    @Override
+    public ProductResponseDto getProductByTitleAndDescription(String titile, String description) {
+        Product product = productRepository.findByTitleAndDescription(titile, description);
+        if (product == null) {
+            return null;
+        }
+        ProductResponseDto responseDto = ProductMapper.convertProductToProductResponseDto(product);
+        return responseDto;
+    }
+
+    @Override
+    public List<ProductResponseDto> getProductByPriceBetween(double startPrice, double endPrice) {
+        List<Product> products = productRepository.findByPriceAmountBetween(startPrice, endPrice);
+        if (products.isEmpty()) {
+            return null;
+        }
+        List<ProductResponseDto> productResponseDtos = new ArrayList<>();
+        for (Product product : products) {
+            ProductResponseDto responseDto = ProductMapper.convertProductToProductResponseDto(product);
+            productResponseDtos.add(responseDto);
+        }
+        return productResponseDtos;
     }
 }

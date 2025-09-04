@@ -28,6 +28,41 @@ public class ProductController {
         return ResponseEntity.ok(response);
     }
 
+    @GetMapping("/products/title/{title}")
+    public ResponseEntity getProductById(@PathVariable String title){
+        /*
+        Product p1 =new Product(101,"Electronics",195000,"Mehnga Phone","Iphone","www.iphone.com");
+        Product p2 = new Product(105,"Accessories",45000,"Normal","Laptop","www.laptop.com");
+        List<Product> productList= Arrays.asList(p1,p2);
+        return ResponseEntity.ok(productList);
+         */
+        ProductResponseDto response=productService.getProductByTitle(title);
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/products/title/description/{title}/{description}")
+    public ResponseEntity getProductBytitleAnddescription(@PathVariable String title, @PathVariable String description){
+        /*
+        Product p1 =new Product(101,"Electronics",195000,"Mehnga Phone","Iphone","www.iphone.com");
+        Product p2 = new Product(105,"Accessories",45000,"Normal","Laptop","www.laptop.com");
+        List<Product> productList= Arrays.asList(p1,p2);
+        return ResponseEntity.ok(productList);
+         */
+        ProductResponseDto response=productService.getProductByTitleAndDescription(title, description);
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/products/price/{startPrice}/{endPrice}")
+    public List<ProductResponseDto> getProductPriceBetween(@PathVariable double startPrice, @PathVariable double endPrice){
+        /*
+        Product p1 =new Product(101,"Electronics",195000,"Mehnga Phone","Iphone","www.iphone.com");
+        Product p2 = new Product(105,"Accessories",45000,"Normal","Laptop","www.laptop.com");
+        List<Product> productList= Arrays.asList(p1,p2);
+        return ResponseEntity.ok(productList);
+         */
+        List<ProductResponseDto> responseDtos=productService.getProductByPriceBetween(startPrice, endPrice);
+        return responseDtos;
+    }
     @GetMapping("/products")
     public List<ProductResponseDto> getAllProducts() {
         return productService.getAllProducts();
